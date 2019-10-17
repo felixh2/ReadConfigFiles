@@ -1,0 +1,16 @@
+[House]
+1=1.50, QTE_1_SUCCESS = 1, Position=(0;0;0);
+2=2.03, QTE_1_SUCCESS = 0;
+
+[Bar]
+1=3.50, lost_fight = 1, took_nail = 0, Position=(X=430.000000;Y=-430.000000;Z=30.000000);
+2=4.20, lost_fight = 1, took_nail = 0, kill_papa_gitta = 1;
+3=4.56, lost_fight = 1, took_nail = 1, kill_papa_gitta = 1 , run_away = 0, Position=(X=430.000000;Y=410.000000;Z=40.000000);
+4=4.58, lost_fight = 0, took_nail = 1, kill_papa_gitta = 0 , run_away = 1, Position=(0;0;0);
+
+[Alley]
+1=1.11, QTE_1_SUCCESS = 1, GittaIsInYard = 1;
+2=1.12, QTE_1_SUCCESS = 1, GittaIsInRoof = 1;
+3=1.13, QTE_1_SUCCESS = 0;
+
+
