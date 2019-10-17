@@ -1,7 +1,7 @@
 Intermediate/
 Binaries/
 .vs/
-Saved/
-!Saved/Config/Windows
+Saved/*
+!/Saved/Config/Windows/
 Build/
 Notes.txt
