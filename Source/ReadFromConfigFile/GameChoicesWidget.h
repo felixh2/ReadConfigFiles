@@ -46,6 +46,9 @@ public:
 		class UCanvasPanel* CanvasPanelBottom = nullptr;
 	
 
+	UPROPERTY()
+	class ULevelSequencePlayer* LevelSequencePlayer;
+
 	AEnhancedPlayerContoller* PlayerController = nullptr;
 	AEnhancedGameMode* EnhancedGameMode = nullptr;
 	TMap<int32, FChoicesPerRow1> ChoicesPerLevel;

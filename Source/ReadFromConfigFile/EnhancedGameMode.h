@@ -25,6 +25,9 @@ struct FChoicesPerRow1
 
 	UPROPERTY(BlueprintReadOnly, Category = "ChoicesStruct")
 		TMap<FString, bool> ChoicesPerRow;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ChoicesStruct")
+		FString Description = "NONE";
 };
 
 

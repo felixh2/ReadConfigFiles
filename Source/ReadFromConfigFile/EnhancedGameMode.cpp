@@ -8,6 +8,7 @@
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "TimerManager.h"
 
+
 void AEnhancedGameMode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -98,7 +99,9 @@ void AEnhancedGameMode::ParseQueryString1(FString QueryString)
 			ChoicesPerRowStruct.PlayerPosition = Position;
 			UE_LOG(LogTemp, Warning, TEXT("%s"), *Position.ToString());
 		}
-
+		else if (MajorParsedQueryString[ArrayIndex].Contains("Description")) {
+			ChoicesPerRowStruct.Description = MajorParsedQueryString[ArrayIndex];
+		}
 		else {
 			TArray<FString> MinorParsedQueryString;
 			MajorParsedQueryString[ArrayIndex].ParseIntoArray(MinorParsedQueryString, TEXT("="), true);

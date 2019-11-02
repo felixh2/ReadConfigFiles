@@ -17,6 +17,13 @@
 #include "EnhancedToolTip.h"
 #include "Layout/Geometry.h"
 
+//#include "Runtime/LevelSequence/Public/LevelSequence.h"
+#include "Runtime/LevelSequence/Public/LevelSequencePlayer.h"
+
+#include "Runtime/Engine/Classes/Engine/World.h"
+#include "Runtime/MovieScene/Public/MovieSceneSequencePlayer.h"
+#include "Runtime/AssetRegistry/Public/AssetRegistryModule.h"
+
 //https://answers.unrealengine.com/questions/446202/populate-umg-widget-dynamically-from-c.html
 
 #pragma optimize("", off)
@@ -58,7 +65,7 @@ bool UGameChoicesWidget::Initialize()
 	{
 		FString Key = FString::FromInt(Pair.Key);
 		FChoicesPerRow1 Value = Pair.Value;
-
+		
 		UGameStateButton* GameStateButton = NewObject<UGameStateButton>();
 		GameStateButton->ButtonIndex = Pair.Key;	
 		UGameStateButton* GameStateButton1 = NewObject<UGameStateButton>();
@@ -69,6 +76,7 @@ bool UGameChoicesWidget::Initialize()
 		FString ToolTipMusicString = GetFloatAsStringWithPrecision(Value.MusicTime, 3, true);
 		FString ToolTipText; // = FString::SanitizeFloat(Value.MusicTime);
 		ToolTipText = ToolTipMusicString + "\n";
+		ToolTipText += Value.Description + "\n";
 		TArray<FString> GameStateNames;
 		Value.ChoicesPerRow.GetKeys(GameStateNames);
 		for (FString GameStateName : GameStateNames) {
@@ -147,11 +155,33 @@ void UGameChoicesWidget::NativePreConstruct()
 	
 }
 
+
 void UGameChoicesWidget::OnButtonClickedCallback(int32 ButtonIndex)
 {
 	//PlayerController->ClientMessage(FString::FromInt(ButtonIndex));
 
-	//PlayerController->OnGameStateChosen.Broadcast(ButtonIndex);
+	
+
+	 // Get a list of ULevelSequence
+	FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>(FName("AssetRegistry"));
+	IAssetRegistry& AssetRegistry = AssetRegistryModule.Get();
+	TArray<FAssetData> LevelSequenceAssetList;
+	AssetRegistry.GetAssetsByClass(ULevelSequence::StaticClass()->GetFName(), LevelSequenceAssetList);
+	
+
+	ULevelSequence* LevelSequence = Cast<ULevelSequence>(LevelSequenceAssetList[0].GetAsset());
+	FStringAssetReference SequenceName("/Game/LevelSequence2.LevelSequence2");
+	ULevelSequence* Asset = Cast<ULevelSequence>(SequenceName.TryLoad());
+
+	//LevelSequencePlayer = ULevelSequencePlayer::CreateLevelSequencePlayer(GetWorld(), LevelSequence, FMovieSceneSequencePlaybackSettings(), OutActor);
+	
+	if (Cast<UMovieSceneSequencePlayer>(LevelSequencePlayer)->IsPlaying()) {
+		int32 a = 10;
+		Cast<UMovieSceneSequencePlayer>(LevelSequencePlayer)->Pause();
+	}
+
+	//PlayerController->ClientMessage(FString::FromInt(LevelSequencePlayer->GetDuration()));
+
 	EnhancedGameMode->OnGameStateChosen.Broadcast(ButtonIndex);
 }
 
